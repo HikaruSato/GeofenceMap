@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="drive.py coded by basuke">
+        <wpt lat="35.681391" lon="139.766103">
+                <name>東京駅</name>
+        </wpt>
+        <wpt lat="35.681391" lon="139.766103"/>
+        <!-- 中略 -->
+        <wpt lat="35.666195" lon="139.758587"/>
+        <wpt lat="35.666195" lon="139.758587">
+                <name>新橋駅</name>
+        </wpt>
+        <wpt lat="35.62876" lon="139.738999"/>
+        <wpt lat="35.62876" lon="139.738999">
+                <name>品川駅</name>
+        </wpt>
+</gpx>
