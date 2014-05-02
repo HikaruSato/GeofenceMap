@@ -25,7 +25,7 @@
                                 </connections>
                             </mapView>
                             <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzb-82-lAl">
-                                <rect key="frame" x="258" y="507" width="33" height="33"/>
+                                <rect key="frame" x="264" y="512" width="33" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="alM-Zl-NVz"/>
@@ -41,8 +41,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Bzb-82-lAl" secondAttribute="bottom" constant="28" id="2hz-QB-Jsa"/>
-                            <constraint firstAttribute="trailing" secondItem="Bzb-82-lAl" secondAttribute="trailing" constant="29" id="ULE-pd-cnu"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Bzb-82-lAl" secondAttribute="bottom" constant="23" id="2hz-QB-Jsa"/>
+                            <constraint firstAttribute="trailing" secondItem="Bzb-82-lAl" secondAttribute="trailing" constant="23" id="ULE-pd-cnu"/>
                         </constraints>
                     </view>
                     <connections>

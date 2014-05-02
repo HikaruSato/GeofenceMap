@@ -73,7 +73,7 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
         [_mapView removeAnnotations:_mapView.annotations];
         for(CLRegion* region in [[GMLocationManager sharedManager] getMonitoredRegions])
         {
-            GMMKPointAnnotation* pin = [GMMKPointAnnotation new];
+            MKPointAnnotation* pin = [MKPointAnnotation new];
             pin.coordinate = region.center;
             pin.title = region.identifier;
             pin.subtitle = [NSString stringWithFormat:@"%f(%f,%f)", region.radius, region.center.latitude, region.center.longitude];
@@ -134,9 +134,12 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
 
 #pragma mark - MKMapViewDelegate
 
-// アノテーションが表示される時に呼ばれる
--(MKAnnotationView*)mapView:(MKMapView*)mapView viewForAnnotation:(id)annotation{
-    
+//
+/**
+ * @brief アノテーションが表示される時にコールされる
+ */
+-(MKAnnotationView*)mapView:(MKMapView*)mapView viewForAnnotation:(id)annotation
+{
     static NSString *PinIdentifier = @"Pin";
     MKPinAnnotationView *pav = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
     if(pav == nil)
@@ -146,23 +149,18 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
             GMMKPointAnnotation *ann = annotation;
             pav = [[MKPinAnnotationView alloc]
                     initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
-            pav.canShowCallout = YES;  // 吹き出しあり
-            if(ann.pinImage)
-            {
-                pav.image = ann.pinImage;
-                pav.centerOffset = CGPointMake(7.5, 7.5);
-                pav.calloutOffset = CGPointMake(0., 0.);
-                NSLog(@"%f,%f",pav.centerOffset.x, pav.centerOffset.y);
-                //pav
-            }
+            // 吹き出しあり
+            pav.canShowCallout = YES;
+            pav.image = ann.pinImage;
+            pav.centerOffset = CGPointMake(7.5, 7.5);
+            pav.calloutOffset = CGPointMake(0., 0.);
         }
     }
     return pav;
-    
 }
 
 /**
- * @brief 円描画
+ * @brief ジオフェンスの円を描画
  */
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id < MKOverlay >)overlay
 {
@@ -191,7 +189,7 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
     GMMKPointAnnotation* pin = [GMMKPointAnnotation new];
-    pin.coordinate = region.center;
+    pin.coordinate = manager.location.coordinate;
     pin.title = [NSString stringWithFormat:@"%@ に入りました。", region.identifier];
     pin.pinImage = [UIImage imageNamed:@"checkIn"];
     pin.subtitle = [NSString stringWithFormat:@"(%f,%f)", manager.location.coordinate.latitude, manager.location.coordinate.longitude];
@@ -207,8 +205,8 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
 {
     GMMKPointAnnotation* pin = [GMMKPointAnnotation new];
-    pin.coordinate = region.center;
-    pin.title = [NSString stringWithFormat:@"%@ を出ました", region.identifier];
+    pin.coordinate = manager.location.coordinate;
+    pin.title = [NSString stringWithFormat:@"%@ を出ました。", region.identifier];
     pin.pinImage = [UIImage imageNamed:@"checkOut"];
     pin.subtitle = [NSString stringWithFormat:@"(%f,%f)", manager.location.coordinate.latitude, manager.location.coordinate.longitude];
     [_mapView addAnnotation:pin];
@@ -224,7 +222,7 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
 - (void)locationManager:(CLLocation*)userLocation didStateInsideRegion:(CLRegion *)region
 {
     GMMKPointAnnotation* pin = [GMMKPointAnnotation new];
-    pin.coordinate = region.center;
+    pin.coordinate = userLocation.coordinate;
     pin.title = [NSString stringWithFormat:@"%@ 内にいます。", region.identifier];
     pin.pinImage = [UIImage imageNamed:@"checkIn"];
     pin.subtitle = [NSString stringWithFormat:@"(%f,%f)", userLocation.coordinate.latitude, userLocation.coordinate.longitude];
@@ -255,7 +253,6 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
         [self initSetup];
     }
 }
-
 
 #pragma mark - action
 
