@@ -140,20 +140,33 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
  */
 -(MKAnnotationView*)mapView:(MKMapView*)mapView viewForAnnotation:(id)annotation
 {
+    //ユーザー現在地のとき
+    if (annotation == mapView.userLocation)
+    {
+        //現在地はnilを返してデフォルト表示(青いドット)のままにする
+        return nil;
+    }
+    
     static NSString *PinIdentifier = @"Pin";
+     // 再利用可能な MKAnnotationView を取得
     MKPinAnnotationView *pav = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
     if(pav == nil)
     {
+        //IN/OUT アノテーションのとき
         if([annotation isKindOfClass:[GMMKPointAnnotation class]])
         {
             GMMKPointAnnotation *ann = annotation;
-            pav = [[MKPinAnnotationView alloc]
-                    initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
+            pav = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
             // 吹き出しあり
             pav.canShowCallout = YES;
             pav.image = ann.pinImage;
             pav.centerOffset = CGPointMake(7.5, 7.5);
             pav.calloutOffset = CGPointMake(0., 0.);
+        }
+        else
+        {
+            //デフォルトのMKPinAnnotationViewを表示
+            return nil;
         }
     }
     return pav;
@@ -221,12 +234,6 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
  */
 - (void)locationManager:(CLLocation*)userLocation didStateInsideRegion:(CLRegion *)region
 {
-    GMMKPointAnnotation* pin = [GMMKPointAnnotation new];
-    pin.coordinate = userLocation.coordinate;
-    pin.title = [NSString stringWithFormat:@"%@ 内にいます。", region.identifier];
-    pin.pinImage = [UIImage imageNamed:@"checkIn"];
-    pin.subtitle = [NSString stringWithFormat:@"(%f,%f)", userLocation.coordinate.latitude, userLocation.coordinate.longitude];
-    [_mapView addAnnotation:pin];
     [self sendLocalNotification:[NSString stringWithFormat:@"領域：%@ 内にいます。" ,region.identifier]];
 }
 
