@@ -67,8 +67,6 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
         [[GMLocationManager sharedManager] startMonitoringForRegion:CLLocationCoordinate2DMake(35.713768,139.777254) radius:200. identifier:@"Ueno"];
         [[GMLocationManager sharedManager] startMonitoringForRegion:CLLocationCoordinate2DMake(35.720495,139.778837) radius:200. identifier:@"Uguisudani"];
         [[GMLocationManager sharedManager] startMonitoringForRegion:CLLocationCoordinate2DMake(35.727772,139.770987) radius:200. identifier:@"Nippori"];
-        //既に登録した領域に入っている確認
-        [[GMLocationManager sharedManager] requestStateForRegion];
         
         [_mapView removeAnnotations:_mapView.annotations];
         for(CLRegion* region in [[GMLocationManager sharedManager] getMonitoredRegions])
