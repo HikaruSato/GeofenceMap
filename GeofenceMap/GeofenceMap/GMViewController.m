@@ -166,7 +166,8 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
         else
         {
             //デフォルトのMKAnnotationViewを表示
-            return nil;
+            pav = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
+            pav.canShowCallout = YES;
         }
     }
     return pav;
