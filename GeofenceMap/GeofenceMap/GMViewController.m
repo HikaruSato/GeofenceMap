@@ -141,7 +141,7 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
 -(MKAnnotationView*)mapView:(MKMapView*)mapView viewForAnnotation:(id)annotation
 {
     //ユーザー現在地のとき
-    if (annotation == mapView.userLocation)
+    if ([annotation isKindOfClass:[MKUserLocation class]])
     {
         //現在地はnilを返してデフォルト表示(青いドット)のままにする
         return nil;
@@ -149,14 +149,14 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
     
     static NSString *PinIdentifier = @"Pin";
      // 再利用可能な MKAnnotationView を取得
-    MKPinAnnotationView *pav = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
+    MKAnnotationView *pav = (MKAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
     if(pav == nil)
     {
         //IN/OUT アノテーションのとき
         if([annotation isKindOfClass:[GMMKPointAnnotation class]])
         {
             GMMKPointAnnotation *ann = annotation;
-            pav = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
+            pav = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
             // 吹き出しあり
             pav.canShowCallout = YES;
             pav.image = ann.pinImage;
@@ -165,7 +165,7 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
         }
         else
         {
-            //デフォルトのMKPinAnnotationViewを表示
+            //デフォルトのMKAnnotationViewを表示
             return nil;
         }
     }
