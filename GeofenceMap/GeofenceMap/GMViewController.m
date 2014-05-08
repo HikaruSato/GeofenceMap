@@ -150,7 +150,7 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
     MKAnnotationView *pav = (MKAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
     if(pav == nil)
     {
-        pav = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
+        pav = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
     }
     
     //IN/OUT アノテーションのとき
@@ -163,16 +163,11 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
         pav.image = ann.pinImage;
         pav.centerOffset = CGPointMake(7.5, 7.5);
         pav.calloutOffset = CGPointMake(0., 0.);
-    }
-    else
-    {
-        //デフォルトのMKAnnotationViewを表示
-        pav.canShowCallout = YES;
-        pav.centerOffset = CGPointMake(8., -15.);
-        pav.calloutOffset = CGPointMake(-8., 0.);
+        return pav;
     }
     
-    return pav;
+    //デフォルトのPinを使用。
+    return nil;
 }
 
 /**
