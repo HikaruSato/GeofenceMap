@@ -150,24 +150,28 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
     MKAnnotationView *pav = (MKAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
     if(pav == nil)
     {
-        //IN/OUT アノテーションのとき
-        if([annotation isKindOfClass:[GMMKPointAnnotation class]])
-        {
-            GMMKPointAnnotation *ann = annotation;
-            pav = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
-            // 吹き出しあり
-            pav.canShowCallout = YES;
-            pav.image = ann.pinImage;
-            pav.centerOffset = CGPointMake(7.5, 7.5);
-            pav.calloutOffset = CGPointMake(0., 0.);
-        }
-        else
-        {
-            //デフォルトのMKAnnotationViewを表示
-            pav = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
-            pav.canShowCallout = YES;
-        }
+        pav = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
     }
+    
+    //IN/OUT アノテーションのとき
+    if([annotation isKindOfClass:[GMMKPointAnnotation class]])
+    {
+        GMMKPointAnnotation *ann = annotation;
+        
+        // 吹き出しあり
+        pav.canShowCallout = YES;
+        pav.image = ann.pinImage;
+        pav.centerOffset = CGPointMake(7.5, 7.5);
+        pav.calloutOffset = CGPointMake(0., 0.);
+    }
+    else
+    {
+        //デフォルトのMKAnnotationViewを表示
+        pav.canShowCallout = YES;
+        pav.centerOffset = CGPointMake(8., -15.);
+        pav.calloutOffset = CGPointMake(-8., 0.);
+    }
+    
     return pav;
 }
 
