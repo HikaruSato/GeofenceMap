@@ -170,30 +170,27 @@ static GMLocationManager *_sharedManger = nil;
         radius = _locationManager.maximumRegionMonitoringDistance;
     }
     
-    if ([GMLocationManager isMonitoringAvailable])
+    //iOS7以降
+    if (iOSVersion >= 7.0)
     {
-        //iOS7以降
-        if (iOSVersion >= 7.0)
+        CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:center
+                                                                     radius:radius
+                                                                 identifier:regionId];
+        [_locationManager startMonitoringForRegion:region];
+    }
+    //iOS6以前
+    else
+    {
+        CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter:center
+                                                                   radius:radius
+                                                               identifier:regionId];
+        if(iOSVersion >= 5.0)
         {
-            CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:center
-                                                       radius:radius
-                                                   identifier:regionId];
             [_locationManager startMonitoringForRegion:region];
         }
-        //iOS6以前
         else
         {
-            CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter:center
-                                                             radius:radius
-                                                         identifier:regionId];
-            if(iOSVersion >= 5.0)
-            {
-                [_locationManager startMonitoringForRegion:region];
-            }
-            else
-            {
-                [_locationManager startMonitoringForRegion:region desiredAccuracy:kCLLocationAccuracyBest];
-            }
+            [_locationManager startMonitoringForRegion:region desiredAccuracy:kCLLocationAccuracyBest];
         }
     }
 }
