@@ -190,7 +190,10 @@ static GMLocationManager *_sharedManger = nil;
         }
         else
         {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             [_locationManager startMonitoringForRegion:region desiredAccuracy:kCLLocationAccuracyBest];
+#pragma clang diagnostic pop
         }
     }
 }
