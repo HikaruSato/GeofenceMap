@@ -264,6 +264,14 @@ static GMLocationManager *_sharedManger = nil;
 
 #pragma mark - CLLocationManager Delegate
 
+- (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
+{
+    if([self.delegate respondsToSelector:@selector(locationManager:didStartMonitoringForRegion:)])
+    {
+        [self.delegate locationManager:manager didStartMonitoringForRegion:region];
+    }
+}
+
 /**
  * @brief 指定した領域に入った場合
  */

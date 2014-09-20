@@ -67,22 +67,6 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
     [[GMLocationManager sharedManager] startMonitoringForRegion:CLLocationCoordinate2DMake(35.727772,139.770987) radius:200. identifier:@"Nippori"];
     
     [_mapView removeAnnotations:_mapView.annotations];
-    for(CLRegion* region in [[GMLocationManager sharedManager] getMonitoredRegions])
-    {
-        MKPointAnnotation* pin = [MKPointAnnotation new];
-        pin.coordinate = region.center;
-        pin.title = region.identifier;
-        pin.subtitle = [NSString stringWithFormat:@"%f(%f,%f)", region.radius, region.center.latitude, region.center.longitude];
-        [_mapView addAnnotation:pin];
-        
-        //円作成
-        MKCircle* circle = [MKCircle circleWithCenterCoordinate:region.center radius:region.radius];
-        circle.title = Const_GPMarkerDataCircle;
-        [_mapView addOverlay:circle];
-    }
-    //KVOで現在地(location)を観察
-    [_mapView.userLocation addObserver:self forKeyPath:@"location" options:0 context:NULL];
-    _isObserveLocation = YES;
 
     if(![GMLocationManager isMonitoringAvailable])
     {
@@ -190,6 +174,25 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
 #pragma mark - GMLocationManagerDelegate
 
 /**
+ * @brief 領域の監視スタート時にコールされる
+ * @params manager ユーザー位置情報など
+ * @params region 対象領域
+ */
+- (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
+{
+    MKPointAnnotation* pin = [MKPointAnnotation new];
+    pin.coordinate = region.center;
+    pin.title = region.identifier;
+    pin.subtitle = [NSString stringWithFormat:@"%f(%f,%f)", region.radius, region.center.latitude, region.center.longitude];
+    [_mapView addAnnotation:pin];
+    
+    //円作成
+    MKCircle* circle = [MKCircle circleWithCenterCoordinate:region.center radius:region.radius];
+    circle.title = Const_GPMarkerDataCircle;
+    [_mapView addOverlay:circle];
+}
+
+/**
  * @brief 領域に入ったときにコールされる
  * @params manager ユーザー位置情報など
  * @params region 対象領域
@@ -252,6 +255,9 @@ static NSString *Const_GPMarkerDataCircle  = @"GPMarkerDataCircle";
     if(status == kCLAuthorizationStatusAuthorized)
     {
         [self sendLocalNotification:@"領域観測の利用が出来ます。"];
+        //KVOで現在地(location)を観察
+        [_mapView.userLocation addObserver:self forKeyPath:@"location" options:0 context:NULL];
+        _isObserveLocation = YES;
     }
 }
 

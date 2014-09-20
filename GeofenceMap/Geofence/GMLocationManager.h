@@ -12,6 +12,7 @@
 
 @protocol GMLocationManagerDelegate<NSObject>
 @optional
+- (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region;
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region;
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region;
 - (void)locationManager:(CLLocationManager *)manager didFailForRegion:(CLRegion *)region withError:(NSError *)error;
