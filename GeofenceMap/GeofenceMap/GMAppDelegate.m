@@ -13,6 +13,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    if([[launchOptions allKeys] containsObject:UIApplicationLaunchOptionsLocationKey]) {
+        //領域の入った/出たなどでアプリが起動された
+    }
     
     return YES;
 }

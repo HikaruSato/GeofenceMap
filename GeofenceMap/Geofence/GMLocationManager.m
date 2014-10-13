@@ -57,31 +57,25 @@ static GMLocationManager *_sharedManger = nil;
     //iOS7以降
     if (iOSVersion >= 7.0)
     {
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized &&
-            [CLLocationManager isMonitoringAvailableForClass:[region class]])
+        if ([CLLocationManager isMonitoringAvailableForClass:[region class]])
         {
             ret = YES;
         }
         else
         {
-            DEBUGLOG(@"領域観測の使用不可。 locationServicesEnabled:%@, isMonitoringAvailableForClass:%@",
-                     ([CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"),
-                     ([CLLocationManager isMonitoringAvailableForClass:[region class]] ? @"YES" : @"NO"));
+            DEBUGLOG(@"領域観測の使用不可。");
         }
     }
     //iOS6以前
     else
     {
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized &&
-            [CLLocationManager regionMonitoringAvailable])
+        if ([CLLocationManager regionMonitoringAvailable])
         {
             ret = YES;
         }
         else
         {
-            DEBUGLOG(@"領域観測の使用不可。 locationServicesEnabled:%@, regionMonitoringAvailable:%@",
-                     ([CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"),
-                     ([CLLocationManager regionMonitoringAvailable] ? @"YES" : @"NO"));
+            DEBUGLOG(@"領域観測の使用不可。");
         }
     }
     
@@ -100,8 +94,7 @@ static GMLocationManager *_sharedManger = nil;
     //iOS7以降
     if (iOSVersion >= 7.0)
     {
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized &&
-            [CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]])
+        if ([CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]])
         {
             ret = YES;
         }
@@ -109,8 +102,7 @@ static GMLocationManager *_sharedManger = nil;
     //iOS6以前
     else
     {
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized &&
-            [CLLocationManager regionMonitoringAvailable])
+        if ([CLLocationManager regionMonitoringAvailable])
         {
             ret = YES;
         }
@@ -163,6 +155,10 @@ static GMLocationManager *_sharedManger = nil;
 - (void)startMonitoringForRegion:(CLLocationCoordinate2D)center radius:(CLLocationDistance)radius identifier:(NSString *)regionId
 {
     float iOSVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    
+    if([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+        [_locationManager requestAlwaysAuthorization];
+    }
     
     //最大半径を超えている場合、丸める
     if(radius > _locationManager.maximumRegionMonitoringDistance)
@@ -264,6 +260,12 @@ static GMLocationManager *_sharedManger = nil;
 
 #pragma mark - CLLocationManager Delegate
 
+/**
+ *  登録した領域観測が開始されたときの処理
+ *
+ *  @param manager locaitonManger
+ *  @param region  対象の領域
+ */
 - (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
 {
     if([self.delegate respondsToSelector:@selector(locationManager:didStartMonitoringForRegion:)])
@@ -273,7 +275,10 @@ static GMLocationManager *_sharedManger = nil;
 }
 
 /**
- * @brief 指定した領域に入った場合
+ *  指定した領域に入った場合
+ *
+ *  @param manager locaitonManger
+ *  @param region  対象の領域
  */
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {    

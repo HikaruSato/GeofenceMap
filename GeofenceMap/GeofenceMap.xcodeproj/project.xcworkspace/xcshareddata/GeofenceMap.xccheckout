@@ -10,29 +10,29 @@
 	<string>GeofenceMap</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>77C5C14F-C755-40ED-862D-0B9AB501BBB5</key>
+		<key>87C181AFC6A33BB470C5CB46329D426046D3DEC7</key>
 		<string>https://github.com/HIkaruSato/GeofenceMap.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>GeofenceMap/GeofenceMap.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>77C5C14F-C755-40ED-862D-0B9AB501BBB5</key>
+		<key>87C181AFC6A33BB470C5CB46329D426046D3DEC7</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/HIkaruSato/GeofenceMap.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>77C5C14F-C755-40ED-862D-0B9AB501BBB5</string>
+	<string>87C181AFC6A33BB470C5CB46329D426046D3DEC7</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>77C5C14F-C755-40ED-862D-0B9AB501BBB5</string>
+			<string>87C181AFC6A33BB470C5CB46329D426046D3DEC7</string>
 			<key>IDESourceControlWCCName</key>
 			<string>GeofenceMap</string>
 		</dict>
